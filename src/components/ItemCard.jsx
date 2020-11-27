@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ItemCard = ({ title, description, image }) => {
+const ItemCard = ({ title, description, image, createdAt }) => {
   const imageUrl = image[0].url;
+  const postedDate = new Date(createdAt).toDateString();
   return (
     <Card>
       <ImageBox style={{ backgroundImage: `url(${imageUrl})` }} />
       <h4>{title}</h4>
-      <p>{description}</p> 
+      <p>{description}</p>
+      <p>{postedDate}</p>
     </Card>
   );
 };
@@ -18,8 +20,11 @@ const Card = styled.div`
   height: 16rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-bottom: 2rem;
+  h4, p {
+    margin: 0.5rem;
+    margin-left: 1rem;
+  }
 `
 
 const ImageBox = styled.div`
@@ -29,6 +34,7 @@ const ImageBox = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 1rem;
+  align-self: center;
 `
 
 export default ItemCard;

@@ -14,6 +14,7 @@ const ImageList = () => {
         id
         title
         description
+        createdAt
         image {
           url
         }
