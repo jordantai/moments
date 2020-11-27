@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import ItemCard from './ItemCard';
 import { client } from '../utils/api';
 import { gql } from 'graphql-request';
 
 const ImageList = () => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-   const query = gql`
+  // all items query
+  const query = gql`
     {
       items {
+        id
         title
         description
         image {
@@ -17,17 +20,30 @@ const ImageList = () => {
       }
     }
   `
-
-  client.request(query)
-    .then(({items}) => {
-      setItems(items);
-    })
+  // fetch data from api and store in items array
+  useEffect(() => {
+    setIsLoading(true);
+    client.request(query)
+      .then(({ items }) => {
+        setItems(items);
+        console.log(items);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [query]);
 
   return (
     <div>
-      {items.map((item) => {
-        <h3>{item.title}</h3>
-      })}
+      <ul>
+        {items.map((item) => {
+          return (
+            <li key={item.id}>
+              <ItemCard {...item} />
+            </li>  
+          )  
+        })}
+      </ul>
     </div>
   );
 };
