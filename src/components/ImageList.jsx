@@ -15,6 +15,7 @@ const ImageList = () => {
         id
         title
         description
+        momentDate
         createdAt
         image {
           url
@@ -22,6 +23,16 @@ const ImageList = () => {
       }
     }
   `
+
+  // const mutation = gql`
+  //   mutation AddImage{
+  //     createItem(data: {title: "Cantona3", description: "eric", image: { create: {fileName: "https://i2-prod.manchestereveningnews.co.uk/incoming/article16419697.ece/ALTERNATES/s810/1_Eric-Cantona-Football-Manchester-United.jpg", handle: "jsahnuhBGTb djh8077hB"}}, location: {latitude: 1.5, longitude: 1.5}, slug: "eric5"}) {
+  //       id
+  //       title
+  //     }
+  //   }
+  // `
+  
   // fetch data from api and store in items array
   useEffect(() => {
     setIsLoading(true);

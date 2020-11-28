@@ -19,6 +19,7 @@ const MainWrapper = styled.main`
   list-style: none;
   display: flex;
   justify-content: center;
+  background-color: whitesmoke;
   ul {
     margin: 0;
     padding: 0;
