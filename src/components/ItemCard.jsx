@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { randomTransform } from '../utils/functions';
 
-const ItemCard = ({ title, description, image, momentDate }) => {
+const ItemCard = ({ title, image, momentDate }) => {
   const imageUrl = image[0].url;
   const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: '2-digit', day: '2-digit' });
   let randomNum = randomTransform(-5, 5);

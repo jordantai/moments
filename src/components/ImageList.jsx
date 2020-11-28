@@ -51,7 +51,7 @@ const ImageList = () => {
 
   return (
     <div>
-      <button onClick={() => handleClick('orderBy: createdAt_DESC')}>Order By Date (newest first)</button>
+      {/* <button onClick={() => handleClick('orderBy: createdAt_DESC')}>Order By Date (newest first)</button> */}
       <button onClick={() => handleClick('orderBy: createdAt_ASC')}>Order By Date (oldest first)</button>
       <ul>
         {items.map((item) => {
