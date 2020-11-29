@@ -5,7 +5,7 @@ import { randomTransform } from '../utils/functions';
 const ItemCard = ({ title, image, momentDate }) => {
   const imageUrl = image[0].url;
   const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  let randomNum = randomTransform(-5, 5);
+  const randomNum = randomTransform(-5, 5);
 
   return (
     <Card style={{transform: `rotate(${randomNum}deg)`}}>

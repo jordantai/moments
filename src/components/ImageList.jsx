@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import ItemCard from './ItemCard';
 import { client } from '../utils/api';
 import { gql } from 'graphql-request';
+import { randomTransform } from '../utils/functions';
 
 const ImageList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [orderBy, setOrderBy] = useState('orderBy: createdAt_DESC');
+  const [orderBy, setOrderBy] = useState("orderBy: createdAt_DESC");
 
   // all items query
   const query = gql`
@@ -45,14 +46,19 @@ const ImageList = () => {
       })
   }, [query]);
 
-  const handleClick = (event) => {
-    setOrderBy(event);
+  const handleOrderChange = (event) => {
+    setOrderBy(event.target.value);
   }
 
   return (
     <div>
-      {/* <button onClick={() => handleClick('orderBy: createdAt_DESC')}>Order By Date (newest first)</button> */}
-      <button onClick={() => handleClick('orderBy: createdAt_ASC')}>Order By Date (oldest first)</button>
+      <label htmlFor="order-by">Order by:</label>
+      <select name="order" id="order-by" onChange={handleOrderChange}>
+        <option defaultValue value={'orderBy: createdAt_DESC'}>Added (newest first)</option>
+        <option value={'orderBy: createdAt_ASC'}>Added (oldest first)</option>
+        <option value={'orderBy: momentDate_DESC'}>Moment date (newest first)</option>
+        <option value={'orderBy: momentDate_ASC'}>Moment date (oldest first)</option>
+      </select>
       <ul>
         {items.map((item) => {
           return (
