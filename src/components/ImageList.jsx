@@ -1,29 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import ItemCard from './ItemCard';
-import { client } from '../utils/api';
+import { client, fetchItems } from '../utils/api';
 import { gql } from 'graphql-request';
-import { randomTransform } from '../utils/functions';
 
 const ImageList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [orderBy, setOrderBy] = useState("orderBy: createdAt_DESC");
+  const [searchItem, setSearchItem] = useState("");
 
   // all items query
-  const query = gql`
-    {
-      items(${orderBy}) {
-        id
-        title
-        description
-        momentDate
-        createdAt
-        image {
-          url
-        }
-      }
-    }
-  `
+  // const query = gql`
+  //   {
+  //     items(${searchItem}) {
+  //       id
+  //       title
+  //       description
+  //       momentDate
+  //       createdAt
+  //       image {
+  //         url
+  //       }
+  //     }
+  //   }
+  // `
+  // const query2 = gql`
+  //   query ItemsByTitle($searchItem: String) {
+  //     items(where: {title_contains: $searchItem) {
+  //       id
+  //       title
+  //       description
+  //       momentDate
+  //       createdAt
+  //       image {
+  //         url
+  //       }
+  //     }
+  //   }
+  //   {
+  //     "searchItem": ${searchItem}
+  //   }
+
+  // `
 
   // const mutation = gql`
   //   mutation AddImage{
@@ -37,17 +55,23 @@ const ImageList = () => {
   // fetch data from api and store in items array
   useEffect(() => {
     setIsLoading(true);
-    client.request(query)
+    //client.request(query2, variables)
+    fetchItems()
       .then(({ items }) => {
+        console.log(items)
         setItems(items);
       })
       .catch((err) => {
         console.log(err);
       })
-  }, [query]);
+  }, []);
 
   const handleOrderChange = (event) => {
     setOrderBy(event.target.value);
+  }
+
+  const handleSearchChange = (event) => {
+    setSearchItem(event.target.value);
   }
 
   return (
@@ -59,6 +83,9 @@ const ImageList = () => {
         <option value={'orderBy: momentDate_DESC'}>Moment date (newest first)</option>
         <option value={'orderBy: momentDate_ASC'}>Moment date (oldest first)</option>
       </select>
+
+      <label htmlFor="search">Search</label>
+      <input type="text" placeholder="Search..." onChange={handleSearchChange}/>
       <ul>
         {items.map((item) => {
           return (
