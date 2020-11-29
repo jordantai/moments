@@ -7,7 +7,7 @@ const ImageList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [orderBy, setOrderBy] = useState("orderBy: createdAt_DESC");
-  const [searchItem, setSearchItem] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // all items query
   // const query = gql`
@@ -55,8 +55,7 @@ const ImageList = () => {
   // fetch data from api and store in items array
   useEffect(() => {
     setIsLoading(true);
-    //client.request(query2, variables)
-    fetchItems()
+    fetchItems(searchTerm)
       .then(({ items }) => {
         console.log(items)
         setItems(items);
@@ -64,14 +63,14 @@ const ImageList = () => {
       .catch((err) => {
         console.log(err);
       })
-  }, []);
+  }, [searchTerm]);
 
   const handleOrderChange = (event) => {
     setOrderBy(event.target.value);
   }
 
   const handleSearchChange = (event) => {
-    setSearchItem(event.target.value);
+    setSearchTerm(event.target.value);
   }
 
   return (

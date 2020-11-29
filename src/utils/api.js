@@ -2,7 +2,8 @@ import request, { gql } from 'graphql-request';
 
 const endpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi764z/master';
 
-export const fetchItems = async () => {
+export const fetchItems = async (searchTerm) => {
+  console.log('search term = ' + searchTerm);
   const query = gql`
     query ItemsByTitle($searchItem: String) {
       items(where: {title_contains: $searchItem}) {
@@ -33,7 +34,7 @@ export const fetchItems = async () => {
   // `
 
   const variables = {
-    searchItem: "pizza",
+    searchItem: searchTerm,
   }
 
   const data = await request(endpoint, query, variables)
