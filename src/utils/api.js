@@ -24,6 +24,5 @@ export const fetchItems = async (searchTerm, orderBy) => {
   }
   
   const data = await request(endpoint, query, variables);
- 
   return data;
 }
