@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --watchAll",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -39,8 +39,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.12.7",
+    "add": "^2.0.6",
     "jest": "26.6.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "yarn": "^1.22.10"
   },
   "resolutions": {
     "styled-components": "^5"

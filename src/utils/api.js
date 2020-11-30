@@ -17,26 +17,13 @@ export const fetchItems = async (searchTerm, orderBy) => {
       }
     }
   `
-  //  const query = gql`
-  //   {
-  //     items {
-  //       id
-  //       title
-  //       description
-  //       momentDate
-  //       createdAt
-  //       image {
-  //         url
-  //       }
-  //     }
-  //   }
-  // `
 
   const variables = {
     searchItem: searchTerm,
     order: orderBy
   }
-
-  const data = await request(endpoint, query, variables)
+  
+  const data = await request(endpoint, query, variables);
+ 
   return data;
 }
