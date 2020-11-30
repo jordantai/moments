@@ -74,18 +74,21 @@ const ImageList = () => {
   }
 
   return (
-    <div>
+    <main>
       <SearchContainer>
-        <label htmlFor="order-by">Order by:</label>
-        <select name="order" id="order-by" onChange={handleOrderChange}>
-          <option defaultValue value={"createdAt_DESC"}>Date added (newest first) </option>
-          <option value={"createdAt_ASC"}>Date added (oldest first)</option>
-          <option value={"momentDate_DESC"}>Date happened (newest first)</option>
-          <option value={"momentDate_ASC"}>Date happened (oldest first)</option>
-        </select>
-
-        <label htmlFor="search">Search</label>
-        <input type="text" placeholder="Search..." onChange={handleSearchChange} />
+        <div>
+          <label htmlFor="order-by">Order by:</label>
+          <select name="order" id="order-by" onChange={handleOrderChange}>
+            <option defaultValue value={"createdAt_DESC"}>Date added DESC </option>
+            <option value={"createdAt_ASC"}>Date added ASC</option>
+            <option value={"momentDate_DESC"}>Date happened DESC</option>
+            <option value={"momentDate_ASC"}>Date happened ASC</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="search">Search Moments</label>
+          <input type="text" placeholder="e.g. pizza" onChange={handleSearchChange} />
+        </div>  
       </SearchContainer>  
       <ul>
         {items.map((item) => {
@@ -96,12 +99,25 @@ const ImageList = () => {
           )  
         })}
       </ul>
-    </div>
+    </main>
   );
 };
 
 const SearchContainer = styled.div`
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  label {
+    font-size: 14px;
+  }
+  select {
+    font-size: 12px;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `;
 
 export default ImageList;
