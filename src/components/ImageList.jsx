@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import ItemCard from './ItemCard';
-import { client, fetchItems } from '../utils/api';
-import { gql } from 'graphql-request';
+import { fetchItems } from '../utils/api';
 
 const ImageList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [orderBy, setOrderBy] = useState("orderBy: createdAt_DESC");
+  const [orderBy, setOrderBy] = useState("createdAt_DESC");
   const [searchTerm, setSearchTerm] = useState("");
 
   // all items query
@@ -55,7 +55,7 @@ const ImageList = () => {
   // fetch data from api and store in items array
   useEffect(() => {
     setIsLoading(true);
-    fetchItems(searchTerm)
+    fetchItems(searchTerm, orderBy)
       .then(({ items }) => {
         console.log(items)
         setItems(items);
@@ -63,7 +63,7 @@ const ImageList = () => {
       .catch((err) => {
         console.log(err);
       })
-  }, [searchTerm]);
+  }, [searchTerm, orderBy]);
 
   const handleOrderChange = (event) => {
     setOrderBy(event.target.value);
@@ -75,16 +75,18 @@ const ImageList = () => {
 
   return (
     <div>
-      <label htmlFor="order-by">Order by:</label>
-      <select name="order" id="order-by" onChange={handleOrderChange}>
-        <option defaultValue value={'orderBy: createdAt_DESC'}>Added (newest first)</option>
-        <option value={'orderBy: createdAt_ASC'}>Added (oldest first)</option>
-        <option value={'orderBy: momentDate_DESC'}>Moment date (newest first)</option>
-        <option value={'orderBy: momentDate_ASC'}>Moment date (oldest first)</option>
-      </select>
+      <SearchContainer>
+        <label htmlFor="order-by">Order by:</label>
+        <select name="order" id="order-by" onChange={handleOrderChange}>
+          <option defaultValue value={"createdAt_DESC"}>Date added (newest first) </option>
+          <option value={"createdAt_ASC"}>Date added (oldest first)</option>
+          <option value={"momentDate_DESC"}>Date happened (newest first)</option>
+          <option value={"momentDate_ASC"}>Date happened (oldest first)</option>
+        </select>
 
-      <label htmlFor="search">Search</label>
-      <input type="text" placeholder="Search..." onChange={handleSearchChange}/>
+        <label htmlFor="search">Search</label>
+        <input type="text" placeholder="Search..." onChange={handleSearchChange} />
+      </SearchContainer>  
       <ul>
         {items.map((item) => {
           return (
@@ -97,5 +99,9 @@ const ImageList = () => {
     </div>
   );
 };
+
+const SearchContainer = styled.div`
+  margin-bottom: 1rem;
+`;
 
 export default ImageList;
