@@ -69,7 +69,7 @@ describe('ImageList', () => {
     expect(await screen.findByText('Loading...')).toBeInTheDocument();
   })
   test('should fetch items', () => {
-    const items = [
+    const mockItems = [
       {
         id: "ksdjhsjkgadjk",
         createdAt: "some date",
@@ -83,21 +83,8 @@ describe('ImageList', () => {
         title: "some name"
       }
     ];
-    // const query = gql`
-    //   query getAllItems {
-    //     items {
-    //       id
-    //       createdAt
-    //       description
-    //       image {
-    //         url
-    //       }
-    //       momentDate
-    //       title
-    //     }
-    //   }
-    // `
-    const response = { items }
+
+    const response = { mockItems }
     request.mockResolvedValue(response);
     return fetchItems().then(items => expect(items).toEqual(items))
   })
