@@ -14,9 +14,9 @@ const ImageList = () => {
     let active = true;
     setIsLoading(false);
     fetchItems(searchTerm, orderBy)
-      .then(({ items }) => {
+      .then(({ data }) => {
         if (active) {
-          setItems(items);
+          setItems(data.items);
         }  
       })
       .catch((err) => {
@@ -36,7 +36,7 @@ const ImageList = () => {
     setSearchTerm(event.target.value);
   }
 
-  if (isLoading) return <h1>Loading....</h1>
+  if (isLoading) return <h1 data-testid="loading">Loading....</h1>
   
   return (
     <main>

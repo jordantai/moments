@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.3.0",
     "react": "^17.0.1",
@@ -41,6 +42,7 @@
     "@babel/preset-react": "^7.12.7",
     "add": "^2.0.6",
     "jest": "26.6.0",
+    "msw": "^0.24.1",
     "styled-components": "^5.2.1",
     "yarn": "^1.22.10"
   },
