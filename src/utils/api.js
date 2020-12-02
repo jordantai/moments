@@ -20,7 +20,7 @@ const endpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi
 //   `
 
 export const fetchItems = async (searchTerm, orderBy) => {
-  const { data } = await axios.post(endpoint, {
+  const data = await axios.post(endpoint, {
     query: `
         query ItemsByTitle($searchItem: String, $order: ItemOrderByInput) {
           items(where: {title_contains: $searchItem}, orderBy: $order ) {
