@@ -33,7 +33,9 @@ const ImageList = () => {
     setIsLoading(false);
     fetchItems(searchTerm, orderBy)
       .then((items) => {
-        setItems(items);
+        if (active) {
+          setItems(items);
+        }  
       })
       .catch((err) => {
         setError(err);
@@ -64,7 +66,7 @@ const ImageList = () => {
   }
   if (isLoading) return <h1 data-testid="loading">Loading....</h1>     
   return (
-    <main>
+    <div>
       <SearchContainer>
         <div>
           <label htmlFor="order-by">Order by:</label>
@@ -90,7 +92,7 @@ const ImageList = () => {
           )
         })}
       </ul>
-    </main>
+    </div>
   );
 };
 

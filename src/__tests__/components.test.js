@@ -8,6 +8,29 @@ import ItemCard from '../components/ItemCard';
 
 jest.mock('axios');
 
+beforeEach(() => {
+  const data = {
+      data: {
+        items: 
+        [
+          {
+            id: 1,
+            createdAt: "2020-11-29T11:13:26.467296+00:00",
+            description: "blah blah",
+            image: [
+              {
+                url: "http://somelink.com",
+              }
+            ],
+            momentDate: "2017-12-20",
+            title: "Title Name"
+          }
+        ]
+      }  
+    }    
+    axios.post.mockResolvedValue({ data });
+})
+
 describe('fetchItems()', () => {
   test('fetches data successfully from api', async () => {
     const data = {
@@ -20,7 +43,7 @@ describe('fetchItems()', () => {
               description: "blah blah",
               image: [
                 {
-                  url: "http://somelink.com",
+                  url: "https://somelink.com",
                 }
               ],
               momentDate: "2017-12-20",
@@ -46,89 +69,54 @@ describe('fetchItems()', () => {
 
 describe('App', () => {
   test('renders App component', async() => {
-    const data = {
-      data: {
-        items: 
-        [
-          {
-            id: 1,
-            createdAt: "2020-11-29T11:13:26.467296+00:00",
-            description: "blah blah",
-            image: [
-              {
-                url: "http://somelink.com",
-              }
-            ],
-            momentDate: "2017-12-20",
-            title: "Title Name"
-          }
-        ]
-      }  
-    }    
-    axios.post.mockResolvedValue({ data });
     render(<App />);
-    const header = await screen.findAllByRole('heading');
-    expect(header[0]).toBeInTheDocument();
-    const headerTitle = await screen.findByText(/Moments.../);
-    expect(headerTitle).toBeInTheDocument();
+    const header = await screen.findByRole('heading', {heading: 'Moments...'});
+    expect(header).toBeInTheDocument();
   })
 });
 
 describe('ImageList', () => {
   test('renders ImageList component', async() => {
-    const data = {
-      data: {
-        items: 
-        [
-          {
-            id: 1,
-            createdAt: "2020-11-29T11:13:26.467296+00:00",
-            description: "blah blah",
-            image: [
-              {
-                url: "http://somelink.com",
-              }
-            ],
-            momentDate: "2017-12-20",
-            title: "Title Name"
-          }
-        ]
-      }  
-    }    
-    axios.post.mockResolvedValue({ data });
     render(<ImageList />); 
-    const items = await screen.findAllByRole('listitem');
-    expect(items).toHaveLength(1);
-  })
-  test('displays list items of fetched api data', async () => {
-    const data = {
-      data: {
-        items: 
-        [
-          {
-            id: 1,
-            createdAt: "2020-11-29T11:13:26.467296+00:00",
-            description: "blah blah",
-            image: [
-              {
-                url: "http://somelink.com",
-              }
-            ],
-            momentDate: "2017-12-20",
-            title: "Title Name"
-          }
-        ]
-      }  
-    }    
-    axios.post.mockResolvedValue({ data });
+    const selector = await screen.findByLabelText(/order by/i);
+    expect(selector).toBeInTheDocument();
     
+  })
+  test('displays list of api data', async () => {
     render(<ImageList />);
     const items = await screen.findAllByRole('listitem');
     expect(items).toHaveLength(1);
-    const title = await screen.findByText(/Title Name/);
-    const momentDate = await screen.findByText('20/12/2017');
+  });
+})
+describe('<ItemCard />', () => {
+  test('displays the correct data on each card', () => {
+    const data = {
+      data: {
+        items: 
+        [
+          {
+            id: 1,
+            createdAt: "2020-11-29T11:13:26.467296+00:00",
+            description: "blah blah",
+            image: [
+              {
+                url: "http://somelink.com",
+              },
+            ],
+            momentDate: "2017-12-20",
+            title: "Title Name"
+          }
+        ]
+      }  
+    }    
+    axios.post.mockResolvedValue({ data });
+
+    render(<ItemCard />);
+    //const imageUrl = screen.getByText('http://somelink.com');
+    const title = screen.getByText(/Title Name/);
+    const momentDate = screen.getByText('20/12/2017');
+    //expect(imageUrl).toBeInTheDocument();
     expect(title).toBeInTheDocument();
     expect(momentDate).toBeInTheDocument();
-
-  });
+  })
 })
