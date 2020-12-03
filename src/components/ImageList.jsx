@@ -8,25 +8,52 @@ const ImageList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderBy, setOrderBy] = useState("createdAt_DESC");
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(null);
   
   // fetch data from api and store in items array
+  // useEffect(() => {
+  //   let active = true;
+  //   setIsLoading(false);
+  //   fetchItems(searchTerm, orderBy)
+  //     .then(({ data }) => {
+  //       const { items } = data;
+  //       if (active) {
+  //         setItems(items);
+  //       }  
+  //     })
+      
+  //   // cleanup
+  //   return () => {
+  //     active = false; 
+  //   }
+  // }, [searchTerm, orderBy]);
+
   useEffect(() => {
-    let active = true;
+    let active = true; 
     setIsLoading(false);
     fetchItems(searchTerm, orderBy)
-      .then(({ data }) => {
-        if (active) {
-          setItems(data.items);
-        }  
+      .then((items) => {
+        setItems(items);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       })
-    // cleanup
+     
+     // cleanup
     return () => {
       active = false; 
     }
   }, [searchTerm, orderBy]);
+
+  // useEffect(() => {
+  //   setIsLoading(false);
+  //   const loadUser = async () => {
+  //     const user = await getUser();
+  //     console.log(user.name);
+  //     setUser(user);
+  //   }
+  //   loadUser();
+  // }, []);
 
   const handleOrderChange = (event) => {
     setOrderBy(event.target.value);
@@ -35,9 +62,7 @@ const ImageList = () => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   }
-
-  if (isLoading) return <h1 data-testid="loading">Loading....</h1>
-  
+  if (isLoading) return <h1 data-testid="loading">Loading....</h1>     
   return (
     <main>
       <SearchContainer>
@@ -55,6 +80,7 @@ const ImageList = () => {
           <input type="text" placeholder="e.g. pizza" onChange={handleSearchChange} />
         </div>
       </SearchContainer>
+      {error && <h3>Oops something went wrong...</h3>}
       <ul>
         {items.map((item) => {
           return (
