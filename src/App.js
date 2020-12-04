@@ -1,7 +1,9 @@
 import './App.css';
 import styled from 'styled-components';
+import { Router } from '@reach/router';
 import Header from './components/Header';
 import ImageList from './components/ImageList';
+import Item from './components/Item';
 
 function App() {
 
@@ -9,7 +11,10 @@ function App() {
     <div className="App">
       <Header />
       <MainWrapper>
-        <ImageList />
+        <Router>
+          <ImageList path="/" />
+          <Item path="moment/*slug" />
+        </Router>
       </MainWrapper>  
     </div>
   );
