@@ -47,16 +47,6 @@ const ImageList = () => {
     }
   }, [searchTerm, orderBy]);
 
-  // useEffect(() => {
-  //   setIsLoading(false);
-  //   const loadUser = async () => {
-  //     const user = await getUser();
-  //     console.log(user.name);
-  //     setUser(user);
-  //   }
-  //   loadUser();
-  // }, []);
-
   const handleOrderChange = (event) => {
     setOrderBy(event.target.value);
   }
@@ -79,7 +69,7 @@ const ImageList = () => {
         </div>
         <div>
           <label htmlFor="search">Search Moments:</label>
-          <input type="text" placeholder="e.g. pizza" onChange={handleSearchChange} />
+          <input id="search" type="text" placeholder="e.g. pizza" onChange={handleSearchChange} />
         </div>
       </SearchContainer>
       {error && <h3>Oops something went wrong...</h3>}
