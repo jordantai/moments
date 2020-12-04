@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import { Link } from '@reach/router';
 import styled from 'styled-components';
 import { randomTransform } from '../utils/functions';
 
-const ItemCard = ({ title, image, momentDate }) => {
+const ItemCard = ({ slug, title, image, momentDate }) => {
   const imageUrl = image[0].url;
   const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: '2-digit', day: '2-digit' });
   const randomNum = randomTransform(-5, 5);
   const [transformDeg] = useState(randomNum);
 
   return (
+    <Link to={`/moment/${slug}`}>
     <Card style={{transform: `rotate(${transformDeg}deg)`}}>
       <ImageBox style={{ backgroundImage: `url(${imageUrl})` }} />
       <h4>{title}</h4>
       <p>{dateHappened}</p>
-    </Card>
+      </Card>
+    </Link>  
   );
 };
 

@@ -13,6 +13,7 @@ export const fetchItems = (searchTerm, orderBy) => {
             description
             momentDate
             createdAt
+            slug
             image {
               url
             }
