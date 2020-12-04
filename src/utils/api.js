@@ -36,8 +36,8 @@ export const fetchItems = (searchTerm, orderBy) => {
     });
 };
 
-export const fetchItem = (slug) => {
-  return axios
+export const fetchItem = async (slug) => {
+  const data = await axios
     .post(endpoint, {
       query: `
       query GetItemBySlug($slug: String) {
@@ -61,8 +61,6 @@ export const fetchItem = (slug) => {
           'Content-Type': 'application/json'
         }
       })
-    .then(({ data }) => {
-      const { data: { item } } = data;
-      return item;
-    })
+  
+  return data.data;
 }
