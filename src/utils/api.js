@@ -34,4 +34,35 @@ export const fetchItems = (searchTerm, orderBy) => {
       const { data: { items } } = data;
       return items;
     });
-}; 
+};
+
+export const fetchItem = (slug) => {
+  return axios
+    .post(endpoint, {
+      query: `
+      query GetItemBySlug($slug: String) {
+        item(where: {slug: $slug}) {
+          id
+          title
+          description
+          image {
+            url
+          }
+          createdAt
+          momentDate
+        }
+      }`,
+      variables: {
+        slug: slug
+      }
+    },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    .then(({ data }) => {
+      const { data: { item } } = data;
+      return item;
+    })
+}
