@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { fetchItems } from '../utils/api';
 import App from '../App';
-import ImageList from '../components/ImageList';
+import ItemList from '../components/ItemList';
 
 jest.mock('axios');
 
@@ -77,13 +77,13 @@ describe('App', () => {
 
 describe('ImageList', () => {
   test('renders ImageList component', async() => {
-    render(<ImageList />); 
+    render(<ItemList />); 
     const selector = await screen.findByLabelText(/order by/i);
     expect(selector).toBeInTheDocument();
     
   })
   test('displays list of api data', async () => {
-    render(<ImageList />);
+    render(<ItemList />);
     // renders select and search boxes
     const select = screen.getByRole('combobox', { name: /Order By/i });
     expect(select).toBeInTheDocument();
@@ -100,7 +100,7 @@ describe('ImageList', () => {
     expect(momentDate).toBeInTheDocument();
   });
   test('list items are displayed if input in search box matches the item title', async() => {
-    render(<ImageList />);
+    render(<ItemList />);
     const textbox = screen.getByLabelText(/Search Moments/i);
     userEvent.type(textbox, 'title');
     expect(textbox).toHaveValue('title');

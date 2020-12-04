@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Item = () => {
+const Item = (props) => {
+  console.log(props);
   return (
     <div>
       

@@ -2,7 +2,7 @@ import './App.css';
 import styled from 'styled-components';
 import { Router } from '@reach/router';
 import Header from './components/Header';
-import ImageList from './components/ImageList';
+import ItemList from './components/ItemList';
 import Item from './components/Item';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <Header />
       <MainWrapper>
         <Router>
-          <ImageList path="/" />
+          <ItemList path="/" />
           <Item path="moment/*slug" />
         </Router>
       </MainWrapper>  
