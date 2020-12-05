@@ -6,7 +6,6 @@ const Item = ({slug}) => {
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [locationText, setLocationText] = useState([]);
 
   useEffect(() => {
     setIsLoading(false);
@@ -26,9 +25,10 @@ const Item = ({slug}) => {
 
   const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: 'long', day: '2-digit', weekday: 'long' });
 
+  const [locationText, setLocationText] = useState([]);
   useEffect(() => {
-    if (item) {
       const { location } = item;
+    if (location) {
       const lat = location[0].latitude;
       const lon = location[0].longitude;
       const getLocation = async () => {
@@ -43,7 +43,7 @@ const Item = ({slug}) => {
         }
       }
       getLocation();
-    }
+    }  
   }, [item, location]);
 
   if (isLoading) return <h1>Loading....</h1> 
