@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { fetchItem, fetchLocation } from '../utils/api';
+import { FaRegCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Item = ({slug}) => {
   const [item, setItem] = useState([]);
@@ -48,15 +49,15 @@ const Item = ({slug}) => {
   if (isLoading) return <h1>Loading....</h1> 
   return (
     <Container>
+      <h2>{title}</h2>
       {image
         ? <Image src={image[0].url} alt={title} />
         : <Image />
       }
       <div>
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <p>Date: {dateHappened}</p>
-        <p>Location: {locationText}</p>
+        <p className="description">"{description}"</p>
+        <p><FaRegCalendarAlt /> <span>{dateHappened}</span></p>
+        <p><FaMapMarkerAlt /> <span>{locationText}</span></p>
       </div>
     </Container>
   );
@@ -66,13 +67,29 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  h2 {
+    align-self: flex-start;
+    font-family: 'Permanent Marker', cursive;
+    margin: 1rem 1.5rem;
+  }
   div {
-    margin: 0 1rem 1rem 1rem;
+    align-self: flex-start;
+    margin: 0 1.5rem 1rem 1.5rem;
+    .description {
+      font-style: italic;
+      font-size: 16px;
+    }
+    p {
+      font-size: 14px;
+    }
+    span {
+      font-weight: bold;
+    }
   }
 `
-
 const Image = styled.img`
   width: 90vw;
+  border-radius: 5px;
 `
 
 export default Item;

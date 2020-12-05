@@ -9,24 +9,6 @@ const ImageList = () => {
   const [orderBy, setOrderBy] = useState("createdAt_DESC");
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
-  
-  // fetch data from api and store in items array
-  // useEffect(() => {
-  //   let active = true;
-  //   setIsLoading(false);
-  //   fetchItems(searchTerm, orderBy)
-  //     .then(({ data }) => {
-  //       const { items } = data;
-  //       if (active) {
-  //         setItems(items);
-  //       }  
-  //     })
-      
-  //   // cleanup
-  //   return () => {
-  //     active = false; 
-  //   }
-  // }, [searchTerm, orderBy]);
 
   useEffect(() => {
     let active = true; 
