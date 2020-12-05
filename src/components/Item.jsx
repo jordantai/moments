@@ -8,22 +8,7 @@ const Item = ({slug}) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    let active = true;
     setIsLoading(false);
-    // fetchItem(slug)
-    //   .then((item) => {
-    //     if (active) {
-    //       setItem(item);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setError(err);
-    //   })
-    
-    // return () => {
-    //   active = false;
-    // }
     const getItem = async () => {
       try {
         const data = await fetchItem(slug);
@@ -35,10 +20,12 @@ const Item = ({slug}) => {
     }
     getItem();
   }, [slug])
-
-  console.log(item);
   
-  const { title, description, image, momentDate } = item;
+  const { title, description, image, momentDate, location } = item;
+
+  console.log(location);
+
+  const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
   if (isLoading) return <h1>Loading....</h1> 
   return (
@@ -47,9 +34,12 @@ const Item = ({slug}) => {
         ? <Image src={image[0].url} alt={title} />
         : <Image />
       }
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <p>{momentDate}</p>
+      <div>
+        <h2>{title}</h2>
+        <p>{description}</p>
+        <p>Date: {dateHappened}</p>
+        <p>Location: </p>
+      </div>
     </Container>
   );
 };
@@ -57,6 +47,10 @@ const Item = ({slug}) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  div {
+    margin: 0 1rem 1rem 1rem;
+  }
 `
 
 const Image = styled.img`

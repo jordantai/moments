@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const endpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi764z/master';
+const OPENCAGE_API_KEY = process.env.REACT_APP_OPENCAGE_API_KEY;
+
+const graphCmsEndpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi764z/master';
+
+const openCageBaseUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
 export const fetchItems = (searchTerm, orderBy) => {
   return axios
-    .post(endpoint, {
+    .post(graphCmsEndpoint, {
       query: `
         query ItemsByTitle($searchItem: String, $order: ItemOrderByInput) {
           items(where: {title_contains: $searchItem}, orderBy: $order ) {
@@ -38,7 +42,7 @@ export const fetchItems = (searchTerm, orderBy) => {
 
 export const fetchItem = async (slug) => {
   const data = await axios
-    .post(endpoint, {
+    .post(graphCmsEndpoint, {
       query: `
       query GetItemBySlug($slug: String) {
         item(where: {slug: $slug}) {
@@ -47,6 +51,10 @@ export const fetchItem = async (slug) => {
           description
           image {
             url
+          }
+          location {
+            latitude
+            longitude
           }
           createdAt
           momentDate
@@ -64,3 +72,16 @@ export const fetchItem = async (slug) => {
   
   return data.data;
 }
+
+export const fetchLocation = (lat, lon) => {
+  return axios
+    .get(`${openCageBaseUrl}`, {
+      params: {
+        q: lat + `,` + lon,
+        key: OPENCAGE_API_KEY
+      }
+    })
+    .then(({ data: { results } }) => {
+      return results;
+    })
+};
