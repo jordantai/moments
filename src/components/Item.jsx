@@ -8,7 +8,6 @@ const Item = ({slug}) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setIsLoading(false);
     const getItem = async () => {
       try {
         const data = await fetchItem(slug);
@@ -19,13 +18,14 @@ const Item = ({slug}) => {
       }  
     }
     getItem();
+    setIsLoading(false);
   }, [slug])
   
   const { title, description, image, momentDate, location } = item;
 
   const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: 'long', day: '2-digit', weekday: 'long' });
 
-  const [locationText, setLocationText] = useState([]);
+  const [locationText, setLocationText] = useState("");
   useEffect(() => {
       const { location } = item;
     if (location) {
@@ -34,10 +34,9 @@ const Item = ({slug}) => {
       const getLocation = async () => {
         try {
           const data = await fetchLocation(lat, lon);
-          console.log(data);
-          // get name of town, county and country
-          const [{ components: { town, county, country } }] = data;
-          setLocationText([town, county, country]);
+          // get pre formatted location data
+          const [{ formatted }] = data;
+          setLocationText(formatted);
         } catch (err) {
           console.log(err);
         }
@@ -57,7 +56,7 @@ const Item = ({slug}) => {
         <h2>{title}</h2>
         <p>{description}</p>
         <p>Date: {dateHappened}</p>
-        <p>Location: {locationText[0] + ', ' + locationText[1] + ', ' + locationText[2]}</p>
+        <p>Location: {locationText}</p>
       </div>
     </Container>
   );
