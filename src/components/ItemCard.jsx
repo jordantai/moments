@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import styled from 'styled-components';
 import { randomTransform } from '../utils/functions';
 
-const ItemCard = ({ slug, title, image, momentDate }) => {
+const ItemCard = ({   slug, title, image, momentDate }) => {
   const imageUrl = image[0].url;
   const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: '2-digit', day: '2-digit' });
   const randomNum = randomTransform(-5, 5);
@@ -28,6 +28,11 @@ const Card = styled.div`
   flex-direction: column;
   margin-bottom: 2rem;
   box-shadow: 5px 5px 9px -2px rgba(0, 0, 0, 0.75);
+  :hover {
+    background-color: #e6e6e6;
+    color: darkred;
+    text-decoration: underline;
+  }
   h4, p {
     margin: 0.5rem;
     margin-left: 1rem;
