@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { fetchItem } from '../utils/api';
+import { fetchItem, fetchLocation } from '../utils/api';
 
 const Item = ({slug}) => {
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [locationText, setLocationText] = useState([]);
 
   useEffect(() => {
     setIsLoading(false);
@@ -23,9 +24,27 @@ const Item = ({slug}) => {
   
   const { title, description, image, momentDate, location } = item;
 
-  console.log(location);
+  const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: 'long', day: '2-digit', weekday: 'long' });
 
-  const dateHappened = new Date(momentDate).toLocaleString('default', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  useEffect(() => {
+    if (item) {
+      const { location } = item;
+      const lat = location[0].latitude;
+      const lon = location[0].longitude;
+      const getLocation = async () => {
+        try {
+          const data = await fetchLocation(lat, lon);
+          console.log(data);
+          // get name of town, county and country
+          const [{ components: { town, county, country } }] = data;
+          setLocationText([town, county, country]);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      getLocation();
+    }
+  }, [item, location]);
 
   if (isLoading) return <h1>Loading....</h1> 
   return (
@@ -38,7 +57,7 @@ const Item = ({slug}) => {
         <h2>{title}</h2>
         <p>{description}</p>
         <p>Date: {dateHappened}</p>
-        <p>Location: </p>
+        <p>Location: {locationText[0] + ', ' + locationText[1] + ', ' + locationText[2]}</p>
       </div>
     </Container>
   );
