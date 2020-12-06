@@ -13,6 +13,7 @@ const Item = ({slug}) => {
       try {
         const data = await fetchItem(slug);
         const item = data.data.item;
+        console.log(item);
         setItem(item);
       } catch (err) {
         console.log(err);

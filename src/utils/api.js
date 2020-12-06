@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const OPENCAGE_API_KEY = process.env.REACT_APP_OPENCAGE_API_KEY;
 
-const graphCmsEndpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi764z/master';
+export const graphCmsEndpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi764z/master';
 
 const openCageBaseUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
@@ -40,10 +40,7 @@ export const fetchItems = (searchTerm, orderBy) => {
     });
 };
 
-export const fetchItem = async (slug) => {
-  const data = await axios
-    .post(graphCmsEndpoint, {
-      query: `
+export const getItemBySlugQuery = `
       query GetItemBySlug($slug: String) {
         item(where: {slug: $slug}) {
           id
@@ -59,7 +56,12 @@ export const fetchItem = async (slug) => {
           createdAt
           momentDate
         }
-      }`,
+      }`;
+
+export const fetchItem = async (slug) => {
+  const data = await axios
+    .post(graphCmsEndpoint, {
+      query: `${getItemBySlugQuery}`,
       variables: {
         slug: slug
       }
