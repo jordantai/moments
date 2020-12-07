@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from '@reach/router';
 import { fetchItem, fetchLocation } from '../utils/api';
 import { FaRegCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
@@ -13,11 +14,13 @@ const Item = ({slug}) => {
       try {
         const data = await fetchItem(slug);
         const item = data.data.item;
-        console.log(item);
-        setItem(item);
+        if (item) {
+          console.log(item);
+          setItem(item);
+        }  
       } catch (err) {
-        console.log(err);
-      }  
+        console.log(err.stack);
+      } 
     }
     getItem();
     setIsLoading(false);
@@ -59,6 +62,9 @@ const Item = ({slug}) => {
         <p className="description">"{description}"</p>
         <p><FaRegCalendarAlt /> <span>{dateHappened}</span></p>
         <p><FaMapMarkerAlt /> <span>{locationText}</span></p>
+        <Link to="/">
+          <Button>Back</Button>
+        </Link>  
       </div>
     </Container>
   );
@@ -91,6 +97,19 @@ const Container = styled.div`
 const Image = styled.img`
   width: 90vw;
   border-radius: 5px;
+`
+
+const Button = styled.button`
+  width: 90vw;
+  background-color: tomato;
+  border: 2px solid #cc4f38;
+  color: white;
+  border-radius: 3px;
+  padding: 0.25rem;
+  font-size: 16px;
+  :hover {
+    background-color: #e5593f;
+  }
 `
 
 export default Item;

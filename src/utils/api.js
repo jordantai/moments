@@ -4,7 +4,7 @@ const OPENCAGE_API_KEY = process.env.REACT_APP_OPENCAGE_API_KEY;
 
 export const graphCmsEndpoint = 'https://api-eu-central-1.graphcms.com/v2/ckhxkvbov1mga01yycfpi764z/master';
 
-const openCageBaseUrl = 'https://api.opencagedata.com/geocode/v1/json';
+export const openCageBaseUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
 export const fetchItems = (searchTerm, orderBy) => {
   return axios
@@ -59,20 +59,23 @@ export const getItemBySlugQuery = `
       }`;
 
 export const fetchItem = async (slug) => {
-  const data = await axios
-    .post(graphCmsEndpoint, {
-      query: `${getItemBySlugQuery}`,
-      variables: {
-        slug: slug
-      }
-    },
-      {
-        headers: {
-          'Content-Type': 'application/json'
+  try {
+    const data = await axios
+      .post(graphCmsEndpoint, {
+        query: `${getItemBySlugQuery}`,
+        variables: {
+          slug: slug
         }
-      })
-  
-  return data.data;
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+    return data.data;
+  } catch (err) {
+    return Promise.reject(new Error("error"));
+  }
 }
 
 export const fetchLocation = (lat, lon) => {
@@ -86,4 +89,7 @@ export const fetchLocation = (lat, lon) => {
     .then(({ data: { results } }) => {
       return results;
     })
+    .catch((err) => {
+      console.log(err)
+  })
 };
