@@ -77,20 +77,41 @@ describe('fetchLocation()', () => {
         expect(data[0].formatted).toEqual(address);
         expect(axios.get).toHaveBeenCalledWith(`${openCageBaseUrl}`, { params: { q: lat + "," + lon, key: OPENCAGE_API_KEY } });
         expect(axios.get).toHaveBeenCalledTimes(1);
-      })
+      });
   })
 });
 describe('Item', () => {
-  test('renders Item component and displays api data', async() => {
+  test('renders Item component and displays api data', async () => {
+    // Location data only
+    const data = {
+      data: {
+        results: [
+          {
+            formatted: "Old Trafford",
+          }
+        ]
+      }
+    };  
+  
+    axios.get.mockResolvedValue(data);
+
     render(<Item />);
     const title = await screen.findByRole('heading', { name: /Title Name/i });
     expect(title).toBeInTheDocument();
+
     const image = await screen.findByRole('img', { src: "http://somelink.com" });
     expect(image).toBeInTheDocument();
+
     const description = await screen.findByText("\"blah blah\"");
     expect(description).toBeInTheDocument();
+
     const momentDate = await screen.findByText("Wednesday, 20 December 2017");
     expect(momentDate).toBeInTheDocument();
-    //const address = await screen.findByText("")
+    
+    const address = await screen.findByText("Old Trafford");
+    expect(address).toBeInTheDocument();
+
+    const button = screen.getByRole('button', { name: "Back" });
+    expect(button).toBeInTheDocument();
   });
 });

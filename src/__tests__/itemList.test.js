@@ -76,12 +76,6 @@ describe('App', () => {
 });
 
 describe('ImageList', () => {
-  test('renders ImageList component', async() => {
-    render(<ItemList />); 
-    const selector = await screen.findByLabelText(/order by/i);
-    expect(selector).toBeInTheDocument();
-    
-  })
   test('displays list of api data', async () => {
     render(<ItemList />);
     // renders select and search boxes
