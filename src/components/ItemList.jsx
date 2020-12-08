@@ -55,7 +55,7 @@ const ImageList = () => {
         </div>
       </SearchContainer>
       {error && <h3>Oops something went wrong...</h3>}
-      <ul>
+      <List>
         {items.map((item) => {
           return (
             <li key={item.id}>
@@ -63,7 +63,7 @@ const ImageList = () => {
             </li>
           )
         })}
-      </ul>
+      </List>
     </div>
   );
 };
@@ -84,5 +84,15 @@ const SearchContainer = styled.div`
     justify-content: space-between;
   }
 `;
+
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  @media (min-device-width: 360px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }  
+`
 
 export default ImageList;

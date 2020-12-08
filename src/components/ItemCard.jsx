@@ -44,6 +44,16 @@ const Card = styled.div`
   p {
     font-size: 0.8rem;
   }
+  @media (min-device-width: 360px) and (max-device-width: 768px) {
+    width: 40vw;
+  }
+  @media (min-device-width: 769px) and (max-device-width: 1224px) {
+    width: 30vw;
+  }
+  @media (min-device-width: 1225px) {
+    width: 20vw;
+    margin: 1rem;
+  }
 `
 
 const ImageBox = styled.div`
