@@ -4,6 +4,7 @@ import { Router } from '@reach/router';
 import Header from './components/Header';
 import ItemList from './components/ItemList';
 import Item from './components/Item';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
           <ItemList path="/" />
           <Item path="moment/*slug" />
         </Router>
-      </MainWrapper>  
+      </MainWrapper> 
+      <Footer />
     </div>
   );
 }
