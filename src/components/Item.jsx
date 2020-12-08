@@ -3,27 +3,35 @@ import styled from 'styled-components';
 import { Link } from '@reach/router';
 import { fetchItem, fetchLocation } from '../utils/api';
 import { FaRegCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import ErrorDisplay from './ErrorDisplay';
 
-const Item = ({slug}) => {
+const Item = ({ slug }) => {
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let active = true;
     const getItem = async () => {
       try {
         const data = await fetchItem(slug);
         const item = data.data.item;
-        if (item) {
-          console.log(item);
+        if (item !== null && active) {
           setItem(item);
-        }  
+          setIsLoading(false);
+        } else {
+          setError('Oops something went wrong! Path not found: 404!');
+        } 
       } catch (err) {
-        console.log(err.stack);
+        setError({ error: err.response.data.msg });
+        setIsLoading(false);
       } 
     }
     getItem();
-    setIsLoading(false);
+     // cleanup
+    return () => {
+      active = false; 
+    }
   }, [slug])
   
   const { title, description, image, momentDate, location } = item;
@@ -42,15 +50,19 @@ const Item = ({slug}) => {
           // get pre formatted location data
           const [{ formatted }] = data;
           setLocationText(formatted);
+          setIsLoading(false);
         } catch (err) {
-          console.log(err);
+          setError({ error: err.response.data.msg });
+          setIsLoading(false);
         }
       }
       getLocation();
     }  
   }, [item, location]);
 
-  if (isLoading) return <h1>Loading....</h1> 
+  console.log(isLoading);
+  if(error) return <ErrorDisplay msg={error} />
+  if (isLoading) return <h1>Loading....</h1>
   return (
     <Container>
       <h2>{title}</h2>

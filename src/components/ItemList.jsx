@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import ItemCard from './ItemCard';
 import { fetchItems } from '../utils/api';
 import { FaSearch, FaSort } from 'react-icons/fa';
+import ErrorDisplay from './ErrorDisplay';
 
-const ImageList = () => {
+const ItemList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [orderBy, setOrderBy] = useState("createdAt_DESC");
@@ -13,15 +14,16 @@ const ImageList = () => {
 
   useEffect(() => {
     let active = true; 
-    setIsLoading(false);
     fetchItems(searchTerm, orderBy)
       .then((items) => {
         if (active) {
           setItems(items);
+          setIsLoading(false);
         }  
       })
       .catch((err) => {
-        setError(err);
+        setError({ error: err.response.data.msg });
+        setIsLoading(false);
       })
      
      // cleanup
@@ -37,7 +39,8 @@ const ImageList = () => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   }
-  if (isLoading) return <h1 data-testid="loading">Loading....</h1>     
+  if (isLoading) return <h1>Loading....</h1>
+  if (error) return <ErrorDisplay msg={error} />
   return (
     <div>
       <SearchContainer>
@@ -116,4 +119,4 @@ const List = styled.ul`
   }  
 `
 
-export default ImageList;
+export default ItemList;

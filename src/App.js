@@ -5,6 +5,7 @@ import Header from './components/Header';
 import ItemList from './components/ItemList';
 import Item from './components/Item';
 import Footer from './components/Footer';
+import ErrorDisplay from './components/ErrorDisplay';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Router>
           <ItemList path="/" />
           <Item path="moment/*slug" />
+          <ErrorDisplay default />
         </Router>
       </MainWrapper> 
       <Footer />
