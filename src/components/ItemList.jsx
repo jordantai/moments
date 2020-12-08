@@ -69,9 +69,11 @@ const ImageList = () => {
 };
 
 const SearchContainer = styled.div`
+  width: 100%;
   margin-bottom: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  flex-grow: 1;
   label {
     font-size: 14px;
   }

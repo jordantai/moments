@@ -4,11 +4,13 @@ import { Link } from '@reach/router';
 
 const Header = () => {
   const title = "Moments...";
+  const subTitle = "Your fondest memories"
 
   return (
     <Link to="/">
       <MainHeader>
         {title}
+        <h2>{subTitle}</h2>
       </MainHeader>
     </Link>  
   );
@@ -18,7 +20,13 @@ const MainHeader = styled.header`
   font-size: 3rem;
   font-family: 'Fredericka the Great', cursive;
   display: flex;
-  margin-left: 1.5rem;
+  flex-direction: column;
+  margin: 1rem 0 1rem 2.5rem;
+  h2 {
+    font-size: 0.9rem;
+    margin: 0;
+    align-self: center;
+  }
 `;
 
 export default Header;
