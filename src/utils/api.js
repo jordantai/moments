@@ -37,7 +37,10 @@ export const fetchItems = (searchTerm, orderBy) => {
     .then(({ data }) => {
       const { data: { items } } = data;
       return items;
-    });
+    })
+    .catch((err) => {
+      return Promise.reject(new Error(err));
+    })
 };
 
 export const getItemBySlugQuery = `
@@ -90,6 +93,6 @@ export const fetchLocation = (lat, lon) => {
       return results;
     })
     .catch((err) => {
-      console.log(err)
-  })
+      return Promise.reject(new Error(err));
+    })
 };
