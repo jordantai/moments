@@ -3,7 +3,6 @@ import axios from 'axios';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { fetchItems } from '../utils/api';
-import App from '../App';
 import ItemList from '../components/ItemList';
 
 jest.mock('axios');
@@ -67,23 +66,16 @@ describe('fetchItems()', () => {
   })
 });
 
-describe('App', () => {
-  test('renders App component', async() => {
-    render(<App />);
-    const header = await screen.findByRole('heading', {heading: 'Moments...'});
-    expect(header).toBeInTheDocument();
-  })
-});
-
 describe('ImageList', () => {
+  test('displays sort select element and search input element', async() => {
+    render(<ItemList />);
+    const selectElement = await screen.findByDisplayValue('Date added DESC');
+    expect(selectElement).toBeInTheDocument();
+    const search = await screen.findByRole('textbox', {id: /search/i});
+    expect(search).toBeInTheDocument();
+  })
   test('displays list of api data', async () => {
     render(<ItemList />);
-    // renders select and search boxes
-    const select = screen.getByRole('combobox', { name: /Order By/i });
-    expect(select).toBeInTheDocument();
-    const search = screen.getByLabelText('Search Moments:');
-    expect(search).toBeInTheDocument();
-    // renders li items
     const items = await screen.findAllByRole('listitem');
     expect(items).toHaveLength(1);
     // renders each card title
@@ -95,7 +87,7 @@ describe('ImageList', () => {
   });
   test('list items are displayed if input in search box matches the item title', async() => {
     render(<ItemList />);
-    const textbox = screen.getByLabelText(/Search Moments/i);
+    const textbox = await screen.findByRole('textbox', {id: /search/i});
     userEvent.type(textbox, 'title');
     expect(textbox).toHaveValue('title');
     const items = await screen.findAllByRole('listitem');
