@@ -60,7 +60,6 @@ const Item = ({ slug }) => {
     }  
   }, [item, location]);
 
-  console.log(isLoading);
   if(error) return <ErrorDisplay msg={error} />
   if (isLoading) return <h1>Loading....</h1>
   return (

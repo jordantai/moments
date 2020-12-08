@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const Footer = () => {
   const year = new Date().getFullYear();
-  console.log(year);
   return (
     <FooterText>
       <p>Moments... {year}</p>
