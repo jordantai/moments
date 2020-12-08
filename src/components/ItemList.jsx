@@ -55,7 +55,8 @@ const ImageList = () => {
           <input id="search" type="text" placeholder="e.g. pizza" onChange={handleSearchChange} />
         </div>
       </SearchContainer>
-      {error && <h3>Oops something went wrong...</h3>}
+      {items.length < 1 ? <h4>Oops, no results. Try another search term</h4> : ""}
+      {error && <h4>Oops something went wrong...</h4>}
       <List>
         {items.map((item) => {
           return (
