@@ -24,8 +24,7 @@ const MainHeader = styled.header`
   margin: 1rem 0 1rem 2.5rem;
   h2 {
     font-size: 0.9rem;
-    margin: 0;
-    align-self: center;
+    margin: 0 0 0 2rem;
   }
 `;
 

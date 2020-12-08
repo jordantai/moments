@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ItemCard from './ItemCard';
 import { fetchItems } from '../utils/api';
+import { FaSearch, FaSort } from 'react-icons/fa';
 
 const ImageList = () => {
   const [items, setItems] = useState([]);
@@ -41,7 +42,7 @@ const ImageList = () => {
     <div>
       <SearchContainer>
         <div>
-          <label htmlFor="order-by">Order by:</label>
+          <label htmlFor="order-by"><FaSort /></label>
           <select name="order" id="order-by" onChange={handleOrderChange}>
             <option defaultValue value={"createdAt_DESC"}>Date added DESC </option>
             <option value={"createdAt_ASC"}>Date added ASC</option>
@@ -50,7 +51,7 @@ const ImageList = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="search">Search Moments:</label>
+          <label htmlFor="search"><FaSearch /></label>
           <input id="search" type="text" placeholder="e.g. pizza" onChange={handleSearchChange} />
         </div>
       </SearchContainer>
@@ -72,24 +73,41 @@ const SearchContainer = styled.div`
   width: 100%;
   margin-bottom: 1rem;
   display: flex;
-  justify-content: space-evenly;
-  flex-grow: 1;
-  label {
-    font-size: 14px;
-  }
-  select {
-    font-size: 12px;
-  }
+  justify-content: center;
   div {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: flex-start;
+  }
+  label {
+    font-size: 1rem;
+    margin-right: 4px;
+  }
+  select, input {
+    background-color: white;
+    font-size: 0.8rem;
+    border: none;
+    border-bottom: 2px solid darkslategrey;
+    margin-right: 1rem;
+    border-radius: 3px 3px 0 0;
+    outline: none;
+    :active, :focus {
+      border-bottom: 2px solid darkorange;
+    }
+  }
+  @media (min-device-width: 768px) {
+    label {
+      font-size: 1.3rem;
+    }
+    select, input {
+      font-size: 1rem;
+    }
   }
 `;
 
 const List = styled.ul`
   display: flex;
   flex-direction: column;
+  align-items: center;
   @media (min-device-width: 360px) {
     flex-direction: row;
     flex-wrap: wrap;
